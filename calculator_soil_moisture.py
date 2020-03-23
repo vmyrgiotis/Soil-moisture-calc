@@ -12,45 +12,38 @@
 
 import pandas as pd 
 import numpy as np
-import daylength_calc 
 import math
 import datetime as dt
 import matplotlib.pyplot as plt 
 
-import numpy as np
-
-def daylength(dayOfYear, lat):
-    """Computes the length of the day (the time between sunrise and
-    sunset) given the day of the year and latitude of the location.
-    Function uses the Brock model for the computations.
-    For more information see, for example,
-    Forsythe et al., "A model comparison for daylength as a
-    function of latitude and day of year", Ecological Modelling,
-    1995.
-    Parameters
-    ----------
-    dayOfYear : int
-        The day of the year. 1 corresponds to 1st of January
-        and 365 to 31st December (on a non-leap year).
-    lat : float
-        Latitude of the location in degrees. Positive values
-        for north and negative for south.
-    Returns
-    -------
-    d : float
-        Daylength in hours.
-    """
-    latInRad = np.deg2rad(lat)
-    declinationOfEarth = 23.45*np.sin(np.deg2rad(360.0*(283.0+dayOfYear)/365.0))
-    if -np.tan(latInRad) * np.tan(np.deg2rad(declinationOfEarth)) <= -1.0:
-        return 24.0
-    elif -np.tan(latInRad) * np.tan(np.deg2rad(declinationOfEarth)) >= 1.0:
-        return 0.0
-    else:
-        hourAngle = np.rad2deg(np.arccos(-np.tan(latInRad) * np.tan(np.deg2rad(declinationOfEarth))))
-        return 2.0*hourAngle/15.0
 
 def SWB(data,latitude,Tsnow,TAW,first_yr,last_yr) :
+
+        def daylength(dayOfYear, lat):
+	"""Computes the length of the day (the time between sunrise and
+	sunset) given the day of the year and latitude of the location.
+	Function uses the Brock model for the computations.
+	For more information see, for example,
+	Forsythe et al., "A model comparison for daylength as a
+	function of latitude and day of year", Ecological Modelling,1995.
+	Parameters
+	----------
+	dayOfYear : int. The day of the year. 
+	lat : float. Latitude of the location in degrees. + values for north and - for south.
+	Returns
+	-------
+	d : float
+	Daylength in hours.
+	"""
+		latInRad = np.deg2rad(lat)
+		declinationOfEarth = 23.45*np.sin(np.deg2rad(360.0*(283.0+dayOfYear)/365.0))
+		if -np.tan(latInRad) * np.tan(np.deg2rad(declinationOfEarth)) <= -1.0:
+		return 24.0
+		elif -np.tan(latInRad) * np.tan(np.deg2rad(declinationOfEarth)) >= 1.0:
+		return 0.0
+		else:
+		hourAngle = np.rad2deg(np.arccos(-np.tan(latInRad) * np.tan(np.deg2rad(declinationOfEarth))))
+		return 2.0*hourAngle/15.0
 
 	snow_init = 20
 	fr_sn_acc = 0.95
@@ -58,7 +51,7 @@ def SWB(data,latitude,Tsnow,TAW,first_yr,last_yr) :
 
 	# month_names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 	# month_lengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
+	
 	def ExAtRa(DOY,latitude):
 		# Calculates Extra-Atmospheric Radiation
 		# DOY & latitude in degrees (negative for S emishpere).
