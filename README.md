@@ -1,2 +1,1 @@
-# Soil_moisture_model
-A simple soil moisture calculator 
+# A simple soil moisture calculator 
